@@ -1,6 +1,6 @@
-# 🌸 AstrBot 梦幻 WebUI 插件 ✨
-
-[![AstrBot](https://img.shields.io/badge/AstrBot-Plugin-pink)](https://github.com/Soulter/AstrBot)
+# 🌸 AstrBot 梦幻 WebUI 插件 ✨  
+  
+[![AstrBot]    (https://img.shields.io/badge/AstrBot-Plugin-pink)]  (https://github.com/Soulter/AstrBot)
 [![Python](https://img.shields.io/badge/Python-3.8+-ff69b4)](https://www.python.org/)
 [![License](https://img.shields.io/badge/License-AGPL--3.0-ff69b4)](LICENSE)
 [![Developer](https://img.shields.io/badge/Developer-飞翔的死猪-ff69b4)](https://github.com/your-repo)
@@ -388,9 +388,9 @@ data/plugins/webui/
 
 ---
 
-## 📝 更新日志
+## 📝 更新日志  
 
-### v1.0.0
+### v1.0.0  
 - 🎉 初始版本发布，撒花~
 - ✨ 多用户权限管理~
 - 🎀 可爱粉色主题~
@@ -400,12 +400,12 @@ data/plugins/webui/
 
 ---
 
-## 🤝 贡献
+## 🤝 贡献  
 
 欢迎提交 Issue 和 Pull Request！
 让我们一起把这个插件做得更好更可爱~
 
-## 📄 许可证
+## 📄 许可证  
 
 AGPL-3.0 License
 
@@ -417,3 +417,4 @@ AGPL-3.0 License
   <small>感谢使用，要开心哦~ 🌸</small>
 
  
+
