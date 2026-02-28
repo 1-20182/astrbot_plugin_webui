@@ -3,197 +3,197 @@
 [![AstrBot]    (https://img.shields.io/badge/AstrBot-Plugin-pink)]  (https://github.com/Soulter/AstrBot)
 [![Python](https://img.shields.io/badge/Python-3.8+-ff69b4)](https://www.python.org/)
 [![License](https://img.shields.io/badge/License-AGPL--3.0-ff69b4)](LICENSE)
-[![Developer](https://img.shields.io/badge/Developer-飞翔的死猪-ff69b4)](https://github.com/your-repo)
+[![Developer](https://img.shields.io/badge/Developer-飞翔的死猪-ff69b4)]
+  
+> 💖 嗨嗨~ 这是一个超级可爱的 AstrBot 多用户管理面板喵！  
+>   
+> ✨ 支持实时插件管理、人格配置、第三方插件安装，让管理变得萌萌哒~！  
+>   
+> 🐷 由 **飞翔的死猪** 精心打造~  
+  
+![Preview](https://img.shields.io/badge/Preview-Available-ff69b4)  
 
-> 💖 嗨嗨~ 这是一个超级可爱的 AstrBot 多用户管理面板喵！
-> 
-> ✨ 支持实时插件管理、人格配置、第三方插件安装，让管理变得萌萌哒~！
-> 
-> 🐷 由 **飞翔的死猪** 精心打造~
+---  
 
-![Preview](https://img.shields.io/badge/Preview-Available-ff69b4)
+## 🎀 有什么好玩的功能呀？  
 
----
+### 💕 双角色系统  
+- **👑 管理员大大**: 使用 AstrBot 账号密码登录，拥有全部权限喵~  
+- **👤 普通小伙伴**: 使用独立账号登录，查看插件状态~  
 
-## 🎀 有什么好玩的功能呀？
+### 🎒 魔法道具箱（插件管理）  
+- ✨ 实时获取 AstrBot 已安装插件~  
+- 🔄 一键更新单个或所有插件，超方便！  
+- 🗑️ 卸载不需要的插件~  
+- 🌟 安装第三方插件（支持 GitHub/Git 仓库）  
+- 💤 启用/禁用插件，随心切换~  
 
-### 💕 双角色系统
-- **👑 管理员大大**: 使用 AstrBot 账号密码登录，拥有全部权限喵~
-- **👤 普通小伙伴**: 使用独立账号登录，查看插件状态~
+### 🛒 魔法商店街（插件市场）  
+- 📦 浏览官方插件市场，发现新宝贝~  
+- 🎁 一键安装插件，so easy！  
+- 🔍 查看插件详情，了解清楚再下手~  
 
-### 🎒 魔法道具箱（插件管理）
-- ✨ 实时获取 AstrBot 已安装插件~
-- 🔄 一键更新单个或所有插件，超方便！
-- 🗑️ 卸载不需要的插件~
-- 🌟 安装第三方插件（支持 GitHub/Git 仓库）
-- 💤 启用/禁用插件，随心切换~
+### 🎨 换装小屋（人格管理）  
+- 📝 查看所有人格配置~  
+- 🎭 实时同步 AstrBot 人格数据~  
 
-### 🛒 魔法商店街（插件市场）
-- 📦 浏览官方插件市场，发现新宝贝~
-- 🎁 一键安装插件，so easy！
-- 🔍 查看插件详情，了解清楚再下手~
+### 👫 小伙伴名单（用户管理）  
+- ➕ 添加新用户，欢迎新伙伴~  
+- 🗑️ 删除用户，说再见~  
+- 🔄 重置密码，帮小伙伴找回账号~  
 
-### 🎨 换装小屋（人格管理）
-- 📝 查看所有人格配置~
-- 🎭 实时同步 AstrBot 人格数据~
+### 🌈 超可爱界面  
+- 🎀 粉色梦幻主题，少女心爆棚！  
+- ✨ 丰富的表情包，萌萌哒~  
+- 🌸 动态背景图片，美轮美奂~  
+- 💖 流畅动画效果，丝滑体验~  
 
-### 👫 小伙伴名单（用户管理）
-- ➕ 添加新用户，欢迎新伙伴~
-- 🗑️ 删除用户，说再见~
-- 🔄 重置密码，帮小伙伴找回账号~
+---  
 
-### 🌈 超可爱界面
-- 🎀 粉色梦幻主题，少女心爆棚！
-- ✨ 丰富的表情包，萌萌哒~
-- 🌸 动态背景图片，美轮美奂~
-- 💖 流畅动画效果，丝滑体验~
+## 🚀 快来一起玩吧！  
 
----
+### 1️⃣ 安装插件  
 
-## 🚀 快来一起玩吧！
-
-### 1️⃣ 安装插件
-
-将插件文件夹复制到 AstrBot 的插件目录：
-```bash
+将插件文件夹复制到 AstrBot 的插件目录：  
+```bash  
 # 克隆或下载插件
-git clone https://github.com/your-repo/astrbot-webui.git
-
-# 复制到 AstrBot 插件目录
+git clone https://github.com/your-repo/astrbot-webui.git  
+  
+# 复制到 AstrBot 插件目录  
 cp -r astrbot-webui /path/to/astrbot/data/plugins/webui
-```
+```  
 
-### 2️⃣ 安装依赖
+### 2️⃣ 安装依赖  
 
-```bash
-# 使用 pip 安装依赖
+```bash  
+# 使用 pip 安装依赖  
 pip install -r requirements.txt
 
-# 或手动安装
-pip install aiohttp certifi
-```
+# 或手动安装  
+pip install aiohttp certifi  
+```  
 
-### 3️⃣ 重启 AstrBot
+### 3️⃣ 重启 AstrBot  
 
-```bash
+```bash  
 # 重启 AstrBot
 python -m astrbot
-```
+```  
 
-### 4️⃣ 访问 WebUI
+### 4️⃣ 访问 WebUI  
 
-- 查看 AstrBot 日志中的访问地址~
-- 用浏览器打开地址（默认 http://localhost:6180）
-- 用管理员账号登录，开始管理之旅~
+- 查看 AstrBot 日志中的访问地址~  
+- 用浏览器打开地址（默认 http://localhost:6180）  
+- 用管理员账号登录，开始管理之旅~  
 
----
+---  
 
-## 💻 系统安装指南
+## 💻 系统安装指南  
 
-### 🪟 Windows 系统
+### 🪟 Windows 系统  
 
-#### 方法一：使用安装脚本（推荐）
+#### 方法一：使用安装脚本（推荐）  
 
-1. **右键点击安装脚本**，选择"以管理员身份运行"
+1. **右键点击安装脚本**，选择"以管理员身份运行"  
    ```
    data/plugins/webui/install_windows.bat
-   ```
+   ```  
 
-2. **脚本会自动完成：**
-   - ✅ 检查 Python 环境
-   - ✅ 安装依赖包
-   - ✅ 配置 Windows 防火墙
-   - ✅ 创建启动脚本
+2. **脚本会自动完成：**  
+   - ✅ 检查 Python 环境  
+   - ✅ 安装依赖包  
+   - ✅ 配置 Windows 防火墙  
+   - ✅ 创建启动脚本  
 
-3. **重启 AstrBot**，查看日志中的访问地址，冲鸭！
+3. **重启 AstrBot**，查看日志中的访问地址，冲鸭！  
 
-#### 方法二：手动安装
+#### 方法二：手动安装  
 
-```cmd
+```cmd  
 # 安装依赖
-pip install -r requirements.txt
+pip install -r requirements.txt  
 
 # 配置防火墙（以管理员身份运行 PowerShell）
 New-NetFirewallRule -DisplayName "AstrBot WebUI" -Direction Inbound -Protocol TCP -LocalPort 6180 -Action Allow
-```
+```  
 
----
+---  
 
-### 🐧 Linux 系统
+### 🐧 Linux 系统  
 
-#### 方法一：使用安装脚本（推荐）
+#### 方法一：使用安装脚本（推荐）  
 
-```bash
+```bash  
 # 进入 AstrBot 目录
 cd /path/to/astrbot
-
-# 运行安装脚本
+  
+# 运行安装脚本  
 bash data/plugins/webui/install_linux.sh
-```
+```  
 
-#### 方法二：手动安装
+#### 方法二：手动安装  
 
-**Ubuntu/Debian:**
+**Ubuntu/Debian:**  
 ```bash
 sudo apt-get update
 sudo apt-get install -y python3-pip
 pip3 install -r requirements.txt
-```
+```  
 
-**CentOS/RHEL:**
+**CentOS/RHEL:**  
 ```bash
 sudo yum install -y python3-pip
 pip3 install -r requirements.txt
-```
+```  
 
-**防火墙配置:**
+**防火墙配置:**  
 ```bash
 # ufw (Ubuntu/Debian)
-sudo ufw allow 6180/tcp
+sudo ufw allow 6180/tcp  
 
 # firewalld (CentOS/RHEL)
 sudo firewall-cmd --permanent --add-port=6180/tcp
 sudo firewall-cmd --reload
-```
+```  
 
----
+---  
 
-## 🎮 使用指南
+## 🎮 使用指南  
 
-### 👑 管理员登录
+### 👑 管理员登录  
+  
+1. 访问 WebUI 界面（默认 http://localhost:6180）  
+2. 使用 AstrBot 管理员账号登录~  
+3. 进入"👫 小伙伴名单"管理用户，当个好管家~  
 
-1. 访问 WebUI 界面（默认 http://localhost:6180）
-2. 使用 AstrBot 管理员账号登录~
-3. 进入"👫 小伙伴名单"管理用户，当个好管家~
+### 👤 普通用户  
 
-### 👤 普通用户
+1. 使用管理员创建的账号登录~  
+2. 查看"🎒 魔法道具箱"管理插件~  
+3. 浏览"🛒 魔法商店街"安装新插件~  
 
-1. 使用管理员创建的账号登录~
-2. 查看"🎒 魔法道具箱"管理插件~
-3. 浏览"🛒 魔法商店街"安装新插件~
+### 🌟 安装第三方插件  
+  
+1. 进入"🎒 魔法道具箱"  
+2. 在"🌟 安装第三方插件"区域输入 GitHub 仓库地址~   
+3. 点击"🚀 安装"按钮~  
+4. 等待安装完成，叮！安装成功~  
 
-### 🌟 安装第三方插件
+### 🔄 更新插件  
 
-1. 进入"🎒 魔法道具箱"
-2. 在"🌟 安装第三方插件"区域输入 GitHub 仓库地址~
-3. 点击"🚀 安装"按钮~
-4. 等待安装完成，叮！安装成功~
+**单个更新:**  
+- 在插件列表中找到有 🆕 标记的插件~  
+- 点击"🆕 更新"按钮，一键更新~  
 
-### 🔄 更新插件
-
-**单个更新:**
-- 在插件列表中找到有 🆕 标记的插件~
-- 点击"🆕 更新"按钮，一键更新~
-
-**批量更新:**
+**批量更新:**  
 - 点击右上角的"🔄 一键更新所有插件"按钮~
-- 喝杯茶等待更新完成~
+- 喝杯茶等待更新完成~  
+  
+---  
 
----
+## ⚙️ 配置说明  
 
-## ⚙️ 配置说明
-
-编辑 `_conf_schema.json` 文件：
+编辑 `_conf_schema.json` 文件：  
 
 ```json
 {
@@ -202,29 +202,29 @@ sudo firewall-cmd --reload
   "enable_https": false,
   "public_domain": ""
 }
-```
+```  
 
-| 参数 | 说明 | 默认值 |
-|------|------|--------|
-| `port` | 服务端口 | 6180 |
-| `host` | 绑定地址 | 0.0.0.0 |
-| `enable_https` | 启用 HTTPS | false |
-| `public_domain` | 公网域名 | "" |
+| 参数 | 说明 | 默认值 |    
+|------|------|--------|  
+| `port` | 服务端口 | 6180 |  
+| `host` | 绑定地址 | 0.0.0.0 |  
+| `enable_https` | 启用 HTTPS | false |  
+| `public_domain` | 公网域名 | "" |  
 
----
+---  
 
-## 🎨 个性化设置
+## 🎨 个性化设置  
 
-### 自定义背景图片
+### 自定义背景图片  
 
 将图片放入 `data/plugins/webui/background/` 目录：
-- 支持格式: jpg, jpeg, png, gif, webp, bmp
-- 推荐尺寸: 1920x1080 或更大
-- 系统会自动随机切换背景，每次都有新惊喜~
+- 支持格式: jpg, jpeg, png, gif, webp, bmp  
+- 推荐尺寸: 1920x1080 或更大  
+- 系统会自动随机切换背景，每次都有新惊喜~  
 
----
+---  
 
-## 🐛 遇到问题怎么办？
+## 🐛 遇到问题怎么办？  
 
 ### 端口被占用
 
@@ -417,4 +417,5 @@ AGPL-3.0 License
   <small>感谢使用，要开心哦~ 🌸</small>
 
  
+
 
