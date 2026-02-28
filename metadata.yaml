@@ -1,0 +1,5 @@
+name: webui
+desc: AstrBot 插件管理 Web 界面 - 支持远程管理已安装插件和浏览插件市场
+author: AstrBot Plugin
+version: 1.0.0
+repo: 

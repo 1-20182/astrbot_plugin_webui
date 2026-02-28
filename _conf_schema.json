@@ -1,0 +1,26 @@
+{
+  "port": {
+    "description": "访问端口",
+    "type": "int",
+    "default": 6180,
+    "hint": "插件管理页面的访问端口，默认6180。如果提示端口被占用，会自动更换"
+  },
+  "host": {
+    "description": "监听地址",
+    "type": "string",
+    "default": "0.0.0.0",
+    "hint": "保持默认0.0.0.0即可，允许从任何设备访问"
+  },
+  "enable_https": {
+    "description": "启用HTTPS加密（高级用户）",
+    "type": "bool",
+    "default": false,
+    "hint": "普通用户请保持关闭。只有当你有SSL证书时才需要开启"
+  },
+  "public_domain": {
+    "description": "你的域名（可选）",
+    "type": "string",
+    "default": "",
+    "hint": "如果你有域名，可以填写，如：plugin.my-domain.com"
+  }
+}

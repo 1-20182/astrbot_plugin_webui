@@ -1,0 +1,11 @@
+# AstrBot WebUI 插件依赖
+# 安装命令: pip install -r requirements.txt
+
+# Web 框架
+aiohttp>=3.8.0
+
+# SSL 证书验证
+certifi>=2023.0.0
+
+# 可选依赖（用于更好的性能）
+# uvloop>=0.17.0; sys_platform != "win32"
