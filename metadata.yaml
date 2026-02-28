@@ -1,5 +1,5 @@
 name: astrbot_plugin_webui
-desc: " \u0020🌸 AstrBot 梦幻 WebUI 插件 一个可爱又强大的 AstrBot 多用户管理面板，让管理变得萌萌哒~ \n ✨ 功能特性 \n -👥 多用户系统 - 管理员 + 普通用户双角色权限管理 \n -🎒 插件管理 - 实时获取、一键更新、第三方 GitHub 安装 \n -🛒 插件市场 - 浏览官方市场，一键安装插件 \n -🎨 人格管理 - 查看 AstrBot 人格配置 \n -👫 用户管理 - 添加/删除用户，重置密码 \n "
+desc: " 🌸 AstrBot 梦幻 WebUI 插件 一个可爱又强大的 AstrBot 多用户管理面板，让管理变得萌萌哒~"
 author: 飞翔的死猪
 version: 1.0.0
 repo: https://github.com/1-20182/astrbot_plugin_webui
