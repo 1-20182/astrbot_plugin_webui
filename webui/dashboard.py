@@ -382,6 +382,10 @@ class AstrBotDashboard(Star):
         if error:
             return error
         
+        # 验证 CSRF token
+        if not await self._validate_csrf_token(request):
+            return web.json_response({'success': False, 'message': 'CSRF token 验证失败'}, status=403)
+        
         user = self._get_current_user(request)
         if user['role'] != 'admin':
             return web.json_response({'success': False, 'message': '无权限'}, status=403)
@@ -412,6 +416,10 @@ class AstrBotDashboard(Star):
         if error:
             return error
         
+        # 验证 CSRF token
+        if not await self._validate_csrf_token(request):
+            return web.json_response({'success': False, 'message': 'CSRF token 验证失败'}, status=403)
+        
         user = self._get_current_user(request)
         if user['role'] != 'admin':
             return web.json_response({'success': False, 'message': '无权限'}, status=403)
@@ -431,6 +439,10 @@ class AstrBotDashboard(Star):
         error = self._check_auth(request)
         if error:
             return error
+        
+        # 验证 CSRF token
+        if not await self._validate_csrf_token(request):
+            return web.json_response({'success': False, 'message': 'CSRF token 验证失败'}, status=403)
         
         user = self._get_current_user(request)
         if user['role'] != 'admin':
@@ -520,6 +532,10 @@ class AstrBotDashboard(Star):
         if error:
             return error
         
+        # 验证 CSRF token
+        if not await self._validate_csrf_token(request):
+            return web.json_response({'success': False, 'message': 'CSRF token 验证失败'}, status=403)
+        
         user = self._get_current_user(request)
         if user['role'] != 'admin':
             return web.json_response({'success': False, 'message': '无权限'}, status=403)
@@ -529,8 +545,9 @@ class AstrBotDashboard(Star):
             plugin_name = data.get('name')
             activated = data.get('activated')
             
-            if hasattr(self.context, 'plugin_manager'):
-                plugin_manager = self.context.plugin_manager
+            # 尝试获取 plugin_manager（AstrBot 存储在 _star_manager 中）
+            plugin_manager = getattr(self.context, '_star_manager', None)
+            if plugin_manager:
                 if activated:
                     if hasattr(plugin_manager, 'turn_on_plugin'):
                         await plugin_manager.turn_on_plugin(plugin_name)
@@ -544,15 +561,22 @@ class AstrBotDashboard(Star):
         except Exception as e:
             logger.error(f"[Dashboard] 切换插件状态失败: {e}")
             return web.json_response({'success': False, 'message': str(e)})
-    
+        
     async def _handle_install_plugin(self, request: web.Request):
         """安装插件"""
         error = self._check_auth(request)
         if error:
+            logger.warning(f"[Dashboard] 安装插件 - 认证失败: {error}")
             return error
+        
+        # 验证 CSRF token
+        if not await self._validate_csrf_token(request):
+            logger.warning("[Dashboard] 安装插件 - CSRF 验证失败")
+            return web.json_response({'success': False, 'message': 'CSRF token 验证失败'}, status=403)
         
         user = self._get_current_user(request)
         if user['role'] != 'admin':
+            logger.warning(f"[Dashboard] 安装插件 - 用户 {user.get('username')} 无权限")
             return web.json_response({'success': False, 'message': '无权限'}, status=403)
         
         try:
@@ -560,51 +584,79 @@ class AstrBotDashboard(Star):
             plugin_name = data.get('name')
             repo_url = data.get('repo')
             
+            logger.info(f"[Dashboard] 开始安装插件: {plugin_name}, 仓库: {repo_url}")
+            
             if not repo_url:
                 return web.json_response({'success': False, 'message': '缺少插件仓库地址'})
             
-            if hasattr(self.context, 'plugin_manager'):
-                plugin_manager = self.context.plugin_manager
+            # 尝试获取 plugin_manager（AstrBot 存储在 _star_manager 中）
+            plugin_manager = getattr(self.context, '_star_manager', None)
+            if plugin_manager:
+                logger.info(f"[Dashboard] _star_manager 类型: {type(plugin_manager)}")
                 if hasattr(plugin_manager, 'install_plugin'):
-                    success, message = await plugin_manager.install_plugin(repo_url)
-                    if success:
+                    logger.info(f"[Dashboard] 调用 install_plugin: {repo_url}")
+                    try:
+                        result = await plugin_manager.install_plugin(repo_url)
+                        logger.info(f"[Dashboard] install_plugin 返回: {result}")
+                        # AstrBot 的 install_plugin 下载成功但加载失败时返回 None
+                        # 只要没抛异常，就认为安装成功
                         logger.info(f"[Dashboard] 插件 {plugin_name} 安装成功")
-                        return web.json_response({'success': True, 'message': '插件安装成功'})
-                    else:
-                        return web.json_response({'success': False, 'message': message or '安装失败'})
+                        return web.json_response({'success': True, 'message': '插件安装成功，请重启 AstrBot 完成加载'})
+                    except Exception as install_error:
+                        logger.error(f"[Dashboard] install_plugin 抛出异常: {install_error}")
+                        return web.json_response({'success': False, 'message': f'安装失败: {str(install_error)}'})
+                else:
+                    logger.error("[Dashboard] _star_manager 没有 install_plugin 方法")
+            else:
+                logger.error(f"[Dashboard] context 没有 _star_manager，可用属性: {[attr for attr in dir(self.context) if not attr.startswith('__')]}")
             
             return web.json_response({'success': False, 'message': '插件安装功能暂不可用'})
         except Exception as e:
             logger.error(f"[Dashboard] 安装插件失败: {e}")
+            logger.error(traceback.format_exc())
             return web.json_response({'success': False, 'message': str(e)})
     
     async def _handle_uninstall_plugin(self, request: web.Request):
         """卸载插件"""
         error = self._check_auth(request)
         if error:
+            logger.warning(f"[Dashboard] 卸载插件 - 认证失败: {error}")
             return error
+        
+        # 验证 CSRF token
+        if not await self._validate_csrf_token(request):
+            logger.warning("[Dashboard] 卸载插件 - CSRF 验证失败")
+            return web.json_response({'success': False, 'message': 'CSRF token 验证失败'}, status=403)
         
         user = self._get_current_user(request)
         if user['role'] != 'admin':
+            logger.warning(f"[Dashboard] 卸载插件 - 用户 {user.get('username')} 无权限")
             return web.json_response({'success': False, 'message': '无权限'}, status=403)
         
         try:
             data = await request.json()
             plugin_name = data.get('name')
             
-            if hasattr(self.context, 'plugin_manager'):
-                plugin_manager = self.context.plugin_manager
+            logger.info(f"[Dashboard] 开始卸载插件: {plugin_name}")
+            
+            # 尝试获取 plugin_manager（AstrBot 存储在 _star_manager 中）
+            plugin_manager = getattr(self.context, '_star_manager', None)
+            if plugin_manager:
+                logger.info(f"[Dashboard] _star_manager 类型: {type(plugin_manager)}")
                 if hasattr(plugin_manager, 'uninstall_plugin'):
-                    success, message = await plugin_manager.uninstall_plugin(plugin_name)
-                    if success:
-                        logger.info(f"[Dashboard] 插件 {plugin_name} 卸载成功")
-                        return web.json_response({'success': True, 'message': '插件卸载成功'})
-                    else:
-                        return web.json_response({'success': False, 'message': message or '卸载失败'})
+                    logger.info(f"[Dashboard] 调用 uninstall_plugin: {plugin_name}")
+                    await plugin_manager.uninstall_plugin(plugin_name)
+                    logger.info(f"[Dashboard] 插件 {plugin_name} 卸载成功")
+                    return web.json_response({'success': True, 'message': '插件卸载成功'})
+                else:
+                    logger.error("[Dashboard] _star_manager 没有 uninstall_plugin 方法")
+            else:
+                logger.error(f"[Dashboard] context 没有 _star_manager")
             
             return web.json_response({'success': False, 'message': '插件卸载功能暂不可用'})
         except Exception as e:
             logger.error(f"[Dashboard] 卸载插件失败: {e}")
+            logger.error(traceback.format_exc())
             return web.json_response({'success': False, 'message': str(e)})
     
     async def _handle_update_plugin(self, request: web.Request):
@@ -612,6 +664,10 @@ class AstrBotDashboard(Star):
         error = self._check_auth(request)
         if error:
             return error
+        
+        # 验证 CSRF token
+        if not await self._validate_csrf_token(request):
+            return web.json_response({'success': False, 'message': 'CSRF token 验证失败'}, status=403)
         
         user = self._get_current_user(request)
         if user['role'] != 'admin':
@@ -624,15 +680,12 @@ class AstrBotDashboard(Star):
             if not plugin_name:
                 return web.json_response({'success': False, 'message': '缺少插件名称'})
             
-            if hasattr(self.context, 'plugin_manager'):
-                plugin_manager = self.context.plugin_manager
-                if hasattr(plugin_manager, 'update_plugin'):
-                    success, message = await plugin_manager.update_plugin(plugin_name)
-                    if success:
-                        logger.info(f"[Dashboard] 插件 {plugin_name} 更新成功")
-                        return web.json_response({'success': True, 'message': '🎉 插件更新成功啦~'})
-                    else:
-                        return web.json_response({'success': False, 'message': message or '更新失败'})
+            # 尝试获取 plugin_manager（AstrBot 存储在 _star_manager 中）
+            plugin_manager = getattr(self.context, '_star_manager', None)
+            if plugin_manager and hasattr(plugin_manager, 'update_plugin'):
+                await plugin_manager.update_plugin(plugin_name)
+                logger.info(f"[Dashboard] 插件 {plugin_name} 更新成功")
+                return web.json_response({'success': True, 'message': '🎉 插件更新成功啦~'})
             
             return web.json_response({'success': False, 'message': '插件更新功能暂不可用'})
         except Exception as e:
@@ -645,20 +698,45 @@ class AstrBotDashboard(Star):
         if error:
             return error
         
+        # 验证 CSRF token
+        if not await self._validate_csrf_token(request):
+            return web.json_response({'success': False, 'message': 'CSRF token 验证失败'}, status=403)
+        
         user = self._get_current_user(request)
         if user['role'] != 'admin':
             return web.json_response({'success': False, 'message': '无权限'}, status=403)
         
         try:
-            if hasattr(self.context, 'plugin_manager'):
-                plugin_manager = self.context.plugin_manager
-                if hasattr(plugin_manager, 'update_all_plugins'):
-                    success, message = await plugin_manager.update_all_plugins()
-                    if success:
-                        logger.info("[Dashboard] 所有插件更新成功")
-                        return web.json_response({'success': True, 'message': '🎉 所有插件都更新成功啦~'})
-                    else:
-                        return web.json_response({'success': False, 'message': message or '批量更新失败'})
+            # 尝试获取 plugin_manager（AstrBot 存储在 _star_manager 中）
+            plugin_manager = getattr(self.context, '_star_manager', None)
+            if plugin_manager:
+                # 获取所有可更新的插件
+                plugins = []
+                try:
+                    from astrbot.core.star.context import star_registry
+                    for star in star_registry:
+                        if getattr(star, 'repo', None) and not getattr(star, 'reserved', False):
+                            plugins.append(getattr(star, 'name', ''))
+                except Exception as e:
+                    logger.warning(f"[Dashboard] 获取插件列表失败: {e}")
+                
+                updated = []
+                failed = []
+                for plugin_name in plugins:
+                    try:
+                        if hasattr(plugin_manager, 'update_plugin'):
+                            await plugin_manager.update_plugin(plugin_name)
+                            updated.append(plugin_name)
+                    except Exception as e:
+                        failed.append(f"{plugin_name}: {str(e)}")
+                
+                if failed and not updated:
+                    return web.json_response({'success': False, 'message': f'所有插件更新失败: {"; ".join(failed)}'})
+                elif failed:
+                    return web.json_response({'success': True, 'message': f'更新完成！成功 {len(updated)} 个，失败 {len(failed)} 个'})
+                else:
+                    logger.info("[Dashboard] 所有插件更新成功")
+                    return web.json_response({'success': True, 'message': '🎉 所有插件都更新成功啦~'})
             
             return web.json_response({'success': False, 'message': '批量更新功能暂不可用'})
         except Exception as e:
@@ -670,31 +748,39 @@ class AstrBotDashboard(Star):
         error = self._check_auth(request)
         if error:
             return error
-        
+
+        # 验证 CSRF token
+        if not await self._validate_csrf_token(request):
+            return web.json_response({'success': False, 'message': 'CSRF token 验证失败'}, status=403)
+
         user = self._get_current_user(request)
         if user['role'] != 'admin':
             return web.json_response({'success': False, 'message': '无权限'}, status=403)
-        
+
         try:
             data = await request.json()
             repo_url = data.get('url')
-            
+
             if not repo_url:
                 return web.json_response({'success': False, 'message': '请输入插件仓库地址哦~'})
-            
+
             if not (repo_url.startswith('http://') or repo_url.startswith('https://')):
                 return web.json_response({'success': False, 'message': '仓库地址格式不正确'})
-            
-            if hasattr(self.context, 'plugin_manager'):
-                plugin_manager = self.context.plugin_manager
-                if hasattr(plugin_manager, 'install_plugin'):
-                    success, message = await plugin_manager.install_plugin(repo_url)
-                    if success:
-                        logger.info(f"[Dashboard] 第三方插件安装成功: {repo_url}")
-                        return web.json_response({'success': True, 'message': '🎉 第三方插件安装成功啦~'})
-                    else:
-                        return web.json_response({'success': False, 'message': message or '安装失败'})
-            
+
+            # 尝试获取 plugin_manager（AstrBot 存储在 _star_manager 中）
+            plugin_manager = getattr(self.context, '_star_manager', None)
+            if plugin_manager and hasattr(plugin_manager, 'install_plugin'):
+                try:
+                    result = await plugin_manager.install_plugin(repo_url)
+                    logger.info(f"[Dashboard] install_plugin 返回: {result}")
+                    # AstrBot 的 install_plugin 下载成功但加载失败时返回 None
+                    # 只要没抛异常，就认为安装成功
+                    logger.info(f"[Dashboard] 第三方插件安装成功: {repo_url}")
+                    return web.json_response({'success': True, 'message': '🎉 第三方插件安装成功啦~请重启 AstrBot 完成加载'})
+                except Exception as install_error:
+                    logger.error(f"[Dashboard] install_plugin 抛出异常: {install_error}")
+                    return web.json_response({'success': False, 'message': f'安装失败: {str(install_error)}'})
+
             return web.json_response({'success': False, 'message': '插件安装功能暂不可用'})
         except Exception as e:
             logger.error(f"[Dashboard] 安装第三方插件失败: {e}")

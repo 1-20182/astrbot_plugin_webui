@@ -1169,9 +1169,8 @@ def get_html_template() -> str:
             }
             if (!confirm(`确定要安装这个插件吗？\n仓库: ${url}`)) return;
             try {
-                const res = await fetch('/api/plugins/install-custom', {
+                const res = await apiRequest('/api/plugins/install-custom', {
                     method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({url})
                 });
                 const data = await res.json();
@@ -1190,9 +1189,8 @@ def get_html_template() -> str:
 
         async function togglePlugin(name, activate) {
             try {
-                await fetch('/api/plugins/toggle', {
+                await apiRequest('/api/plugins/toggle', {
                     method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({name, activated: activate})
                 });
                 loadPlugins();
